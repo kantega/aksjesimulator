@@ -15,7 +15,7 @@ module.exports = {
     devtool: 'source-map',
 
     resolve: {
-        extensions: ['', '.js', '.jsx']
+        extensions: ['', '.js', '.jsx', '.scss']
     },
 
     module: {
@@ -26,9 +26,6 @@ module.exports = {
             query: {
                 presets: ['react', 'es2015', 'stage-0']
             }
-        }, {
-            test: /\.css$/,
-            loader: 'style!css'
         }, {
             test: /\.(png|woff|woff2|eot|ttf|svg|jpe?g|gif)$/,
             loader: 'url-loader?limit=100000'
