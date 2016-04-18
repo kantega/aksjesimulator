@@ -1,0 +1,24 @@
+.kantega {
+
+    margin-top: 20px;
+
+    h3 {
+        margin-bottom: 0.4em;
+    }
+
+    &>div {
+
+        div {
+            display: inline-block;
+            width: 150px;
+            padding: 5px 10px;
+            border: 1px solid lightgrey;
+        }
+
+        div:first-child {
+            background-color: #445588;
+            color: white;
+        }
+
+    }
+}

@@ -62,7 +62,11 @@
 	
 	var _TimeMachine2 = _interopRequireDefault(_TimeMachine);
 	
-	var _style = __webpack_require__(174);
+	var _Kantega = __webpack_require__(174);
+	
+	var _Kantega2 = _interopRequireDefault(_Kantega);
+	
+	var _style = __webpack_require__(177);
 	
 	var _style2 = _interopRequireDefault(_style);
 	
@@ -83,8 +87,13 @@
 	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this));
 	
 	        _this.state = {
-	            year: 2008,
-	            employees: [{ name: 'Sigurd', started: 2014, quitted: undefined, shares: 0 }, { name: 'Håvard', started: 2010, quitted: undefined, shares: 0 }, { name: 'Kari', started: 2008, quitted: undefined, shares: 0 }]
+	            year: 2005,
+	            employees: [{ name: 'Sigurd', started: 2014, quitted: undefined, shares: 0 }, { name: 'Håvard', started: 2010, quitted: undefined, shares: 0 }, { name: 'Kari', started: 2008, quitted: 2011, shares: 0 }, { name: 'Camilla', started: 2005, quitted: 2012, shares: 0 }],
+	            kantega: {
+	                shares: 0,
+	                new: 0,
+	                sold: 0
+	            }
 	        };
 	
 	        return _this;
@@ -96,12 +105,26 @@
 	            var _this2 = this;
 	
 	            this.state.year++;
+	
+	            var shares = 0;
 	            this.state.employees.forEach(function (employee) {
 	                if (employee.started <= _this2.state.year) {
-	                    employee.shares += 12000;
-	                    if (employee.shares > 50000) employee.shares = 50000;
+	
+	                    if (!employee.quitted || employee.quitted > _this2.state.year) {
+	                        var canBuy = Math.min(12000, 50000 - employee.shares);
+	                        employee.shares += canBuy;
+	                        shares += canBuy;
+	                    } else {
+	                        shares -= employee.shares;
+	                        employee.shares = 0;
+	                    }
 	                }
 	            });
+	
+	            this.state.kantega.sold = Math.min(shares, this.state.kantega.shares);
+	            this.state.kantega.shares = this.state.kantega.shares - this.state.kantega.sold;
+	            this.state.kantega.new = shares - this.state.kantega.sold;
+	
 	            this.setState(this.state);
 	        }
 	    }, {
@@ -117,6 +140,7 @@
 	                    'Aksjesimulator'
 	                ),
 	                _react2.default.createElement(_EmployeeList2.default, { employees: this.state.employees }),
+	                _react2.default.createElement(_Kantega2.default, { data: this.state.kantega }),
 	                _react2.default.createElement(_TimeMachine2.default, { year: this.state.year, handleClick: this.warp.bind(this) })
 	            );
 	        }
@@ -20663,10 +20687,150 @@
 /* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _style = __webpack_require__(175);
+	
+	var _style2 = _interopRequireDefault(_style);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Kantega = function (_React$Component) {
+	    _inherits(Kantega, _React$Component);
+	
+	    function Kantega() {
+	        _classCallCheck(this, Kantega);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Kantega).apply(this, arguments));
+	    }
+	
+	    _createClass(Kantega, [{
+	        key: 'render',
+	        value: function render() {
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'kantega' },
+	                _react2.default.createElement(
+	                    'h3',
+	                    null,
+	                    'Kantega'
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement(
+	                        'div',
+	                        null,
+	                        'Egne aksjer'
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        null,
+	                        this.props.data.shares
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement(
+	                        'div',
+	                        null,
+	                        'Emisjon siste år'
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        null,
+	                        this.props.data.new
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement(
+	                        'div',
+	                        null,
+	                        'Solgt siste år'
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        null,
+	                        this.props.data.sold
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return Kantega;
+	}(_react2.default.Component);
+	
+	exports.default = Kantega;
+
+/***/ },
+/* 175 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(175);
+	var content = __webpack_require__(176);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(170)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./style.scss", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./style.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 176 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(169)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, ".kantega {\n  margin-top: 20px; }\n  .kantega h3 {\n    margin-bottom: 0.4em; }\n  .kantega > div div {\n    display: inline-block;\n    width: 150px;\n    padding: 5px 10px;\n    border: 1px solid lightgrey; }\n  .kantega > div div:first-child {\n    background-color: #445588;\n    color: white; }\n", ""]);
+	
+	// exports
+
+
+/***/ },
+/* 177 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(178);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(170)(content, {});
@@ -20686,7 +20850,7 @@
 	}
 
 /***/ },
-/* 175 */
+/* 178 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(169)();
