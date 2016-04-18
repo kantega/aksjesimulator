@@ -20056,8 +20056,51 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var EmployeeList = function (_React$Component) {
-	    _inherits(EmployeeList, _React$Component);
+	var Employee = function (_React$Component) {
+	    _inherits(Employee, _React$Component);
+	
+	    function Employee() {
+	        _classCallCheck(this, Employee);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Employee).apply(this, arguments));
+	    }
+	
+	    _createClass(Employee, [{
+	        key: 'render',
+	        value: function render() {
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'employee' },
+	                _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    this.props.data.name
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    this.props.data.started
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    this.props.data.quitted
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    this.props.data.shares
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return Employee;
+	}(_react2.default.Component);
+	
+	var EmployeeList = function (_React$Component2) {
+	    _inherits(EmployeeList, _React$Component2);
 	
 	    function EmployeeList() {
 	        _classCallCheck(this, EmployeeList);
@@ -20068,6 +20111,12 @@
 	    _createClass(EmployeeList, [{
 	        key: 'render',
 	        value: function render() {
+	
+	            var data = [{ name: 'Sigurd', started: '2014', quitted: undefined, shares: 0 }, { name: 'Håvard', started: '2010', quitted: undefined, shares: 0 }, { name: 'Kari', started: '2008', quitted: undefined, shares: 0 }];
+	
+	            var employees = data.map(function (employee) {
+	                return _react2.default.createElement(Employee, { key: employee.name, data: employee });
+	            });
 	
 	            return _react2.default.createElement(
 	                'div',
@@ -20096,26 +20145,7 @@
 	                        'Aksjer'
 	                    )
 	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'employee' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        null,
-	                        'Sigurd'
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        null,
-	                        '2014'
-	                    ),
-	                    _react2.default.createElement('div', null),
-	                    _react2.default.createElement(
-	                        'div',
-	                        null,
-	                        '0'
-	                    )
-	                )
+	                employees
 	            );
 	        }
 	    }]);
