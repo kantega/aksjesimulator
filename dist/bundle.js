@@ -46,6 +46,8 @@
 
 	'use strict';
 	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
@@ -56,22 +58,74 @@
 	
 	var _EmployeeList2 = _interopRequireDefault(_EmployeeList);
 	
-	var _style = __webpack_require__(171);
+	var _TimeMachine = __webpack_require__(171);
+	
+	var _TimeMachine2 = _interopRequireDefault(_TimeMachine);
+	
+	var _style = __webpack_require__(174);
 	
 	var _style2 = _interopRequireDefault(_style);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	(0, _reactDom.render)(_react2.default.createElement(
-	    'div',
-	    null,
-	    _react2.default.createElement(
-	        'h1',
-	        null,
-	        'Aksjesimulator'
-	    ),
-	    _react2.default.createElement(_EmployeeList2.default, null)
-	), document.getElementById('app'));
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var App = function (_React$Component) {
+	    _inherits(App, _React$Component);
+	
+	    function App() {
+	        _classCallCheck(this, App);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this));
+	
+	        _this.state = {
+	            year: 2008,
+	            employees: [{ name: 'Sigurd', started: 2014, quitted: undefined, shares: 0 }, { name: 'Håvard', started: 2010, quitted: undefined, shares: 0 }, { name: 'Kari', started: 2008, quitted: undefined, shares: 0 }]
+	        };
+	
+	        return _this;
+	    }
+	
+	    _createClass(App, [{
+	        key: 'warp',
+	        value: function warp() {
+	            var _this2 = this;
+	
+	            this.state.year++;
+	            this.state.employees.forEach(function (employee) {
+	                if (employee.started <= _this2.state.year) {
+	                    employee.shares += 12000;
+	                    if (employee.shares > 50000) employee.shares = 50000;
+	                }
+	            });
+	            this.setState(this.state);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'h1',
+	                    null,
+	                    'Aksjesimulator'
+	                ),
+	                _react2.default.createElement(_EmployeeList2.default, { employees: this.state.employees }),
+	                _react2.default.createElement(_TimeMachine2.default, { year: this.state.year, handleClick: this.warp.bind(this) })
+	            );
+	        }
+	    }]);
+	
+	    return App;
+	}(_react2.default.Component);
+	
+	(0, _reactDom.render)(_react2.default.createElement(App, null), document.getElementById('app'));
 
 /***/ },
 /* 1 */
@@ -20112,9 +20166,7 @@
 	        key: 'render',
 	        value: function render() {
 	
-	            var data = [{ name: 'Sigurd', started: '2014', quitted: undefined, shares: 0 }, { name: 'Håvard', started: '2010', quitted: undefined, shares: 0 }, { name: 'Kari', started: '2008', quitted: undefined, shares: 0 }];
-	
-	            var employees = data.map(function (employee) {
+	            var employees = this.props.employees.map(function (employee) {
 	                return _react2.default.createElement(Employee, { key: employee.name, data: employee });
 	            });
 	
@@ -20507,10 +20559,114 @@
 /* 171 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _style = __webpack_require__(172);
+	
+	var _style2 = _interopRequireDefault(_style);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var TimeMachine = function (_React$Component) {
+	    _inherits(TimeMachine, _React$Component);
+	
+	    function TimeMachine() {
+	        _classCallCheck(this, TimeMachine);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(TimeMachine).apply(this, arguments));
+	    }
+	
+	    _createClass(TimeMachine, [{
+	        key: 'render',
+	        value: function render() {
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'timemachine' },
+	                _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    'År: ',
+	                    this.props.year
+	                ),
+	                _react2.default.createElement(
+	                    'button',
+	                    { onClick: this.props.handleClick },
+	                    'Warp'
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return TimeMachine;
+	}(_react2.default.Component);
+	
+	exports.default = TimeMachine;
+
+/***/ },
+/* 172 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(172);
+	var content = __webpack_require__(173);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(170)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./style.scss", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/sass-loader/index.js!./style.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(169)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, ".timemachine {\n  margin-top: 10px;\n  text-align: right; }\n  .timemachine div {\n    display: inline-block;\n    margin-right: 20px; }\n  .timemachine button {\n    display: inline-block;\n    background-color: #4CAF50;\n    border: none;\n    color: white;\n    padding: 8px 32px;\n    text-align: center;\n    text-decoration: none;\n    font-size: 16px;\n    cursor: pointer; }\n", ""]);
+	
+	// exports
+
+
+/***/ },
+/* 174 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(175);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(170)(content, {});
@@ -20530,7 +20686,7 @@
 	}
 
 /***/ },
-/* 172 */
+/* 175 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(169)();
